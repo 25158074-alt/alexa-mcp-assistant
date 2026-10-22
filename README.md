@@ -7,6 +7,8 @@ A small Alexa+-style MCP server built with the official Model Context Protocol S
 - Streamable HTTP MCP endpoint at `/mcp`.
 - Health endpoint at `/health`.
 - Agent Skills stored as readable Markdown under `skills/`.
+- Context-aware state through `remember_context` and `get_context`.
+- `orchestrate_routine` combines the daily briefing and home-control skills into an auditable routine plan.
 - `list_skills`, `get_skill`, `run_skill`, and `get_time` tools.
 - Stateless transport, suitable for horizontally scaled deployments.
 - Optional Bearer-token or `x-api-key` protection through `MCP_API_KEY`.
@@ -43,6 +45,10 @@ For an MCP client that supports Streamable HTTP, configure:
 ```
 
 If `MCP_API_KEY` is set, send `Authorization: Bearer <key>` or `x-api-key: <key>`. For production, set `HOST=0.0.0.0`, use HTTPS at the reverse proxy, set a specific `CORS_ORIGIN`, and configure a strong secret.
+
+## The Alexa+ experience
+
+The differentiating flow is a context-aware routine rather than a single-turn question-answer wrapper. A caller can save a preference such as a preferred greeting, then ask the assistant to orchestrate a morning routine. The server composes a spoken briefing, prepares a home-device step, applies a confirmation safety gate, and returns an auditable plan. Context is keyed by `contextId` and remains available while the server process is running; no personal data leaves the process.
 
 ## Agent Skills
 

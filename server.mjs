@@ -14,6 +14,7 @@ const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || '127.0.0.1';
 const MCP_API_KEY = process.env.MCP_API_KEY || '';
 const skillsDir = path.join(__dirname, 'skills');
+const contexts = new Map();
 
 const skillCatalog = [
   {
@@ -32,6 +33,8 @@ const skillCatalog = [
 
 function makeServer() {
   const server = new McpServer({ name: 'alexa-plus-assistant', version: '1.0.0' });
+
+  const getContext = (contextId) => contexts.get(contextId) || { contextId, preferences: {}, notes: [], lastRoutine: null };
 
   server.registerTool('list_skills', {
     title: 'List Agent Skills',
@@ -84,6 +87,68 @@ function makeServer() {
     const briefing = [greeting + '.', items.length ? `You have ${items.length} item${items.length === 1 ? '' : 's'}:` : 'You have no pending items.', ...items.map((item) => `- ${item}`)].join('\n');
     const result = { skill, briefing, itemCount: items.length };
     return { content: [{ type: 'text', text: briefing }], structuredContent: result };
+  });
+
+  server.registerTool('remember_context', {
+    title: 'Remember User Context',
+    description: 'Save lightweight preferences or notes for a named assistant context. Data stays in this server process and is never sent to a third party.',
+    inputSchema: z.object({
+      contextId: z.string().min(1).default('default'),
+      preference: z.record(z.string(), z.string()).default({}),
+      note: z.string().max(500).optional()
+    })
+  }, async ({ contextId, preference, note }) => {
+    const context = getContext(contextId);
+    context.preferences = { ...context.preferences, ...preference };
+    if (note) context.notes = [...context.notes, note].slice(-20);
+    contexts.set(contextId, context);
+    const result = { contextId, preferences: context.preferences, noteCount: context.notes.length, persisted: 'process-memory' };
+    return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }], structuredContent: result };
+  });
+
+  server.registerTool('get_context', {
+    title: 'Get User Context',
+    description: 'Retrieve the lightweight preferences and notes saved for an assistant context.',
+    inputSchema: z.object({ contextId: z.string().min(1).default('default') })
+  }, async ({ contextId }) => {
+    const context = getContext(contextId);
+    return { content: [{ type: 'text', text: JSON.stringify(context, null, 2) }], structuredContent: context };
+  });
+
+  server.registerTool('orchestrate_routine', {
+    title: 'Orchestrate Personal Routine',
+    description: 'Build a context-aware morning or evening routine by combining the daily-briefing and home-control Agent Skills. It returns a plan and never performs a physical-world action.',
+    inputSchema: z.object({
+      contextId: z.string().min(1).default('default'),
+      routine: z.enum(['morning', 'evening']).default('morning'),
+      items: z.array(z.string()).default([]),
+      device: z.string().default('living-room lights')
+    })
+  }, async ({ contextId, routine, items, device }) => {
+    const context = getContext(contextId);
+    const preferredGreeting = context.preferences.greeting || (routine === 'morning' ? 'Good morning' : 'Good evening');
+    const preferredAction = context.preferences[routine + 'Action'] || (routine === 'morning' ? 'check status' : 'check status');
+    const briefing = [preferredGreeting + '.', items.length ? `You have ${items.length} priority item${items.length === 1 ? '' : 's'}:` : 'You have no priority items.', ...items.map((item) => `- ${item}`)].join('\n');
+    const devicePlan = {
+      device,
+      action: preferredAction,
+      confirmationRequired: preferredAction !== 'check status',
+      status: 'planned-only'
+    };
+    const result = {
+      contextId,
+      routine,
+      steps: [
+        { skill: 'daily-briefing', output: briefing },
+        { skill: 'home-control', output: devicePlan },
+        { skill: 'safety-gate', output: devicePlan.confirmationRequired ? 'Ask for explicit confirmation before any device change.' : 'No confirmation needed for a read-only status check.' }
+      ],
+      usedPreferences: Object.keys(context.preferences),
+      note: 'This demo produces an auditable plan; it does not contact a device.'
+    };
+    context.lastRoutine = result;
+    contexts.set(contextId, context);
+    return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }], structuredContent: result };
   });
 
   server.registerTool('get_time', {

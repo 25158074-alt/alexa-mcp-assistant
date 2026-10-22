@@ -18,6 +18,15 @@ try {
   assert.equal(initialize.status, 200);
   const body = await initialize.text();
   assert.match(body, /alexa-plus-assistant/);
+  const client = await import('@modelcontextprotocol/client');
+  const mcpClient = new client.Client({ name: 'smoke-client', version: '1.0.0' });
+  await mcpClient.connect(new client.StreamableHTTPClientTransport(new URL(`http://127.0.0.1:${port}/mcp`)));
+  const tools = await mcpClient.listTools();
+  assert.ok(tools.tools.some((tool) => tool.name === 'orchestrate_routine'));
+  await mcpClient.callTool({ name: 'remember_context', arguments: { contextId: 'smoke', preference: { greeting: 'Hello' } } });
+  const routine = await mcpClient.callTool({ name: 'orchestrate_routine', arguments: { contextId: 'smoke', routine: 'morning', items: ['Test the workflow'], device: 'desk lamp' } });
+  assert.match(routine.content[0].text, /planned-only/);
+  await mcpClient.close();
   console.log('Smoke test passed');
 } finally {
   child.kill('SIGTERM');
