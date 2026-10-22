@@ -1,0 +1,33 @@
+{
+  "name": "alexa-mcp-assistant",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node test-smoke.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/25158074-alt/alexa-mcp-assistant.git"
+  },
+  "keywords": ["mcp", "alexa", "agent-skills", "streamable-http"],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/25158074-alt/alexa-mcp-assistant/issues"
+  },
+  "homepage": "https://github.com/25158074-alt/alexa-mcp-assistant#readme",
+  "description": "Alexa+-style MCP assistant using Streamable HTTP, Agent Skills, and a private demo server.",
+  "dependencies": {
+    "@modelcontextprotocol/client": "^2.3.1",
+    "@modelcontextprotocol/express": "^2.0.2",
+    "@modelcontextprotocol/ext-apps": "^2.0.3",
+    "@modelcontextprotocol/node": "^2.1.1",
+    "@modelcontextprotocol/server": "^2.3.1",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "zod": "^4.6.7"
+  }
+}
