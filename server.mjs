@@ -173,6 +173,10 @@ app.disable('x-powered-by');
 app.use(cors({ origin: process.env.CORS_ORIGIN || true, exposedHeaders: ['Mcp-Session-Id'] }));
 app.use(express.json({ limit: '1mb' }));
 
+app.get('/', (_req, res) => res.type('html').send(`<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alexa+ MCP Assistant</title>
+<style>body{font-family:system-ui,sans-serif;max-width:760px;margin:4rem auto;padding:0 1.25rem;color:#17202a;background:#f7f9fb}main{background:white;padding:2.5rem;border-radius:18px;box-shadow:0 8px 30px #17202a18}h1{margin-top:0;color:#146c94}code{background:#eef4f7;padding:.2rem .4rem;border-radius:5px}a{color:#146c94}li{margin:.7rem 0}.badge{display:inline-block;padding:.35rem .65rem;border-radius:999px;background:#dff5e8;color:#146c50;font-size:.85rem}</style></head>
+<body><main><span class="badge">MCP 2025-11-25 · Streamable HTTP</span><h1>Alexa+ MCP Assistant</h1><p>A context-aware Agent Skills demo that orchestrates daily briefings and safe home-control plans.</p><h2>Try the service</h2><ul><li><a href="/health"><code>/health</code></a> — service status</li><li><code>/mcp</code> — Streamable HTTP MCP endpoint for compatible clients</li></ul><p>The demo is plan-only: it never contacts or changes a real device.</p></main></body></html>`));
 app.get('/health', (_req, res) => res.json({ ok: true, service: 'alexa-plus-assistant', version: '1.0.0' }));
 
 app.all('/mcp', async (req, res) => {
