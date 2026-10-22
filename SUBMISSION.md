@@ -2,9 +2,9 @@
 
 ## Project description
 
-Alexa+ MCP Assistant is a self-hosted Alexa+-style assistant backend that exposes Agent Skills over the Model Context Protocol (MCP) Streamable HTTP transport. A compatible Alexa+ client or MCP client can discover available skills, read their instructions, and run safe demo workflows.
+Alexa+ MCP Assistant is a functional browser chatbot simulation backed by a self-hosted Alexa+-style assistant server. The GitHub Pages experience lets a judge chat naturally with the assistant, save context, request a daily briefing, plan a home action, and orchestrate a routine. The same Agent Skills are exposed over the Model Context Protocol (MCP) Streamable HTTP transport for compatible MCP clients.
 
-The project includes two Agent Skills: `home-control`, which prepares a device-action plan and requires confirmation before any real-world change, and `daily-briefing`, which turns caller-provided items into a concise spoken briefing. The `get_time` tool provides a small utility example. This repository is intentionally a safe demo: it does not claim to control real devices or access personal accounts.
+The project includes two Agent Skills: `home-control`, which prepares a device-action plan and requires confirmation before any real-world change, and `daily-briefing`, which turns caller-provided items into a concise spoken briefing. The browser chatbot adds context memory and a routine orchestrator that combines both skills. The `get_time` tool provides a small utility example. This repository is intentionally a safe demo: it does not claim to control real devices or access personal accounts.
 
 ## Features and functionality
 

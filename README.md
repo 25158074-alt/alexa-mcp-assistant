@@ -1,10 +1,11 @@
 # Alexa+ MCP Assistant
 
-A small Alexa+-style MCP server built with the official Model Context Protocol SDK. It exposes Agent Skills over the Streamable HTTP transport and is safe to run as a demo: the home-control skill only prepares plans and never contacts real devices.
+A browser-based Alexa+ experience plus a self-hosted MCP server built with the official Model Context Protocol SDK. The GitHub Pages app is a functional chatbot simulation; it exposes the same Agent Skill concepts through a friendly conversational interface, while the Node server exposes them over Streamable HTTP for MCP clients.
 
 ## Features
 
 - Streamable HTTP MCP endpoint at `/mcp`.
+- Interactive browser chatbot at `/` with natural-language demo prompts.
 - Health endpoint at `/health`.
 - Agent Skills stored as readable Markdown under `skills/`.
 - Context-aware state through `remember_context` and `get_context`.
@@ -12,6 +13,7 @@ A small Alexa+-style MCP server built with the official Model Context Protocol S
 - `list_skills`, `get_skill`, `run_skill`, and `get_time` tools.
 - Stateless transport, suitable for horizontally scaled deployments.
 - Optional Bearer-token or `x-api-key` protection through `MCP_API_KEY`.
+- Browser-session context memory, daily briefing, home-control confirmation, and multi-skill routine orchestration.
 - Origin and DNS-rebinding protections on the MCP transport.
 
 ## Run locally
