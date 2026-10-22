@@ -16,9 +16,9 @@
     .eyebrow { margin:0 0 8px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#a9dce7; font-weight:800; }
     aside h2 { margin:0 0 8px; font-size:22px; }.side-copy { color:#c4e5eb; line-height:1.5; font-size:13px; }
     .skill-list { margin-top:25px; display:grid; gap:10px; }.skill { padding:12px; border:1px solid #ffffff2b; border-radius:13px; background:#ffffff10; }.skill b { display:block; font-size:13px; }.skill span { display:block; margin-top:4px; color:#c4e5eb; font-size:12px; line-height:1.35; }
-    .status { margin-top:25px; padding:13px; border-radius:13px; background:#073c55aa; font-size:12px; line-height:1.5; }.dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:#6ff2bf; margin-right:6px; }
-    main { display:flex; min-width:0; flex-direction:column; }.topbar { display:flex; justify-content:space-between; align-items:center; padding:24px 30px 18px; border-bottom:1px solid var(--line); }.topbar h1 { margin:0; color:var(--blue-dark); font-size:22px; }.topbar p { margin:5px 0 0; color:var(--muted); font-size:13px; }.protocol { padding:8px 11px; border-radius:999px; color:#146c50; background:var(--mint); font-size:11px; font-weight:800; white-space:nowrap; }
-    .chat { flex:1; min-height:460px; padding:28px 30px; overflow:auto; background:linear-gradient(180deg,#fbfdfe,#f5fafb); }.msg { display:flex; gap:11px; max-width:780px; margin:0 0 19px; animation:rise .2s ease-out; }.msg.user { justify-content:flex-end; margin-left:auto; }.avatar { width:29px; height:29px; flex:none; display:grid; place-items:center; border-radius:10px; background:#d5eef5; color:var(--blue-dark); font-size:12px; font-weight:900; }.user .avatar { order:2; background:#146c94; color:#fff; }.bubble { max-width:min(650px,82%); padding:13px 15px; border:1px solid var(--line); border-radius:16px 16px 16px 4px; background:#fff; box-shadow:0 5px 16px #1430420b; line-height:1.52; font-size:14px; white-space:pre-wrap; }.user .bubble { border:0; border-radius:16px 16px 4px 16px; background:#146c94; color:#fff; }.card { margin-top:11px; padding:12px; border-left:3px solid #35ae9e; background:#f3fbf8; border-radius:8px; color:#31525a; font-size:12px; }.card.warn { border-left-color:#e2a21c; background:var(--warn); }.card strong { color:var(--blue-dark); }
+    .status { margin-top:25px; padding:13px; border-radius:13px; background:#073c55aa; font-size:12px; line-height:1.5; }.dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:#6ff2bf; margin-right:6px; }.context-panel { margin-top:12px; padding:12px; border:1px solid #ffffff2b; border-radius:13px; background:#ffffff10; font-size:12px; }.context-panel b { display:block; margin-bottom:6px; }.context-value { color:#c4e5eb; line-height:1.45; }
+    main { display:flex; min-width:0; flex-direction:column; }.topbar { display:flex; justify-content:space-between; align-items:center; padding:24px 30px 18px; border-bottom:1px solid var(--line); }.topbar h1 { margin:0; color:var(--blue-dark); font-size:22px; }.topbar p { margin:5px 0 0; color:var(--muted); font-size:13px; }.top-actions { display:flex; gap:8px; align-items:center; }.protocol { padding:8px 11px; border-radius:999px; color:#146c50; background:var(--mint); font-size:11px; font-weight:800; white-space:nowrap; }.demo-btn { border:0; border-radius:999px; padding:9px 12px; color:white; background:#e47c2f; font-size:11px; font-weight:800; cursor:pointer; }.demo-btn:hover { background:#c8631e; }
+    .chat { flex:1; min-height:460px; padding:28px 30px; overflow:auto; background:linear-gradient(180deg,#fbfdfe,#f5fafb); }.msg { display:flex; gap:11px; max-width:780px; margin:0 0 19px; animation:rise .2s ease-out; }.msg.user { justify-content:flex-end; margin-left:auto; }.avatar { width:29px; height:29px; flex:none; display:grid; place-items:center; border-radius:10px; background:#d5eef5; color:var(--blue-dark); font-size:12px; font-weight:900; }.user .avatar { order:2; background:#146c94; color:#fff; }.bubble { max-width:min(650px,82%); padding:13px 15px; border:1px solid var(--line); border-radius:16px 16px 16px 4px; background:#fff; box-shadow:0 5px 16px #1430420b; line-height:1.52; font-size:14px; white-space:pre-wrap; }.user .bubble { border:0; border-radius:16px 16px 4px 16px; background:#146c94; color:#fff; }.card { margin-top:11px; padding:12px; border-left:3px solid #35ae9e; background:#f3fbf8; border-radius:8px; color:#31525a; font-size:12px; }.card.warn { border-left-color:#e2a21c; background:var(--warn); }.card strong { color:var(--blue-dark); }.card-actions { display:flex; gap:7px; margin-top:10px; }.card-actions button { border:1px solid #bcd9e5; border-radius:8px; padding:7px 10px; background:#fff; color:var(--blue); font-weight:800; cursor:pointer; }.card-actions .confirm { color:#146c50; border-color:#8bd4b1; background:#effcf5; }.activity { display:flex; gap:7px; flex-wrap:wrap; margin-top:9px; }.activity span { padding:4px 7px; border-radius:5px; background:#e7f4f5; color:#38717b; font-size:10px; font-weight:700; }
     .suggestions { display:flex; gap:8px; flex-wrap:wrap; padding:0 30px 15px; background:#f5fafb; }.suggestion { border:1px solid #bcd9e5; color:var(--blue); background:white; border-radius:999px; padding:8px 11px; cursor:pointer; font-size:12px; }.suggestion:hover { background:#edf7fb; }
     .composer { display:flex; gap:10px; padding:15px 30px 22px; border-top:1px solid var(--line); background:#fff; }.composer input { flex:1; min-width:0; border:1px solid #bfd7e0; border-radius:13px; padding:14px 15px; color:var(--ink); font:inherit; outline:none; }.composer input:focus { border-color:var(--blue); box-shadow:0 0 0 3px #146c9418; }.send { border:0; border-radius:13px; padding:0 21px; color:#fff; background:var(--blue); font-weight:800; cursor:pointer; }.send:hover { background:var(--blue-dark); }
     .footer { padding:0 30px 18px; color:#8a989f; font-size:11px; }.footer a { color:var(--blue); }
@@ -39,9 +39,10 @@
         <div class="skill"><b>Routine Orchestrator</b><span>Combines skills into one auditable workflow.</span></div>
       </div>
       <div class="status"><span class="dot"></span><b>Demo mode</b><br>Runs locally in your browser. No devices or personal accounts are contacted.</div>
+      <div class="context-panel"><b>Active context</b><div class="context-value" id="context-summary">No preferences saved yet.</div></div>
     </aside>
     <main>
-      <header class="topbar"><div><h1>Alexa+ Assistant</h1><p>Ask naturally. The assistant chooses the right skill.</p></div><span class="protocol">MCP 2025-11-25</span></header>
+      <header class="topbar"><div><h1>Alexa+ Assistant</h1><p>Ask naturally. The assistant chooses the right skill.</p></div><div class="top-actions"><button class="demo-btn" id="judge-demo">▶ Judge demo</button><span class="protocol">MCP 2025-11-25</span></div></header>
       <section class="chat" id="chat" aria-live="polite"></section>
       <div class="suggestions" id="suggestions">
         <button class="suggestion" data-prompt="Remember that I prefer a calm morning greeting">Remember my preference</button>
@@ -58,39 +59,52 @@
     const memoryKey = 'alexa-plus-demo-context-v1';
     let context = JSON.parse(localStorage.getItem(memoryKey) || '{"preferences":{},"notes":[]}');
     const esc = (s) => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const contextSummary = document.querySelector('#context-summary');
+    function renderContext() { contextSummary.textContent = context.notes.length ? `Preference saved · ${context.notes[context.notes.length - 1]}` : 'No preferences saved yet.'; }
     function addMessage(text, who='assistant', card='') {
       const el = document.createElement('div'); el.className = `msg ${who}`;
       el.innerHTML = `<div class="avatar">${who === 'user' ? 'You' : 'A+'}</div><div class="bubble">${esc(text)}${card ? `<div class="card ${card.warn ? 'warn' : ''}">${card.html}</div>` : ''}</div>`;
       chat.appendChild(el); chat.scrollTop = chat.scrollHeight;
+      el.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => { addMessage(button.dataset.action === 'confirm' ? 'Confirm the planned home action' : 'Cancel the planned home action', 'user'); setTimeout(() => addMessage(button.dataset.action === 'confirm' ? 'Confirmed. In a real Alexa+ integration, this is where the connected device action would run. This simulation performs no real-world change.' : 'Cancelled safely. No device action was performed.', 'assistant', { html: button.dataset.action === 'confirm' ? '<strong>Safety gate passed</strong><br>Action recorded as simulated only.' : '<strong>Action cancelled</strong><br>No physical-world change occurred.' }), 220); }));
     }
-    function save() { localStorage.setItem(memoryKey, JSON.stringify(context)); }
+    function save() { localStorage.setItem(memoryKey, JSON.stringify(context)); renderContext(); }
     function routineReply(text) {
       const lower = text.toLowerCase();
       if (lower.includes('remember') || lower.includes('prefer')) {
         const match = text.match(/(?:remember|prefer)(?: that)? (.+)/i);
         const note = match ? match[1].replace(/[.!]+$/, '') : 'a calm morning greeting';
         context.preferences.greeting = 'Good morning — calm and focused'; context.notes.push(note); save();
-        return { text:'I’ll remember that for this browser session.', card:{html:`<strong>Context saved</strong><br>${esc(note)}<br><small>Used by the routine orchestrator on your next request.</small>`} };
+        return { text:'I’ll remember that for this browser session.', card:{html:`<strong>Context saved</strong><br>${esc(note)}<br><small>Used by the routine orchestrator on your next request.</small><div class="activity"><span>context-memory</span><span>preference-updated</span></div>`} };
       }
       if (lower.includes('routine') || lower.includes('briefing')) {
         const evening = lower.includes('evening');
         const items = lower.includes('review demo') ? ['Review demo', 'Reply to judges'] : ['Review today’s priorities'];
         const greeting = context.preferences.greeting || (evening ? 'Good evening' : 'Good morning');
         const plan = `${greeting}. You have ${items.length} priority items:\n${items.map(i => '• '+i).join('\n')}`;
-        return { text:'I orchestrated a routine across two Agent Skills.', card:{html:`<strong>${evening ? 'Evening' : 'Morning'} routine · 3 steps</strong><br>1. Daily Briefing: ${esc(plan).replaceAll('\n','<br>')}<br>2. Home Control: prepare a read-only device status check<br>3. Safety Gate: ask before any physical-world change` } };
+        return { text:'I orchestrated a routine across two Agent Skills.', card:{html:`<strong>${evening ? 'Evening' : 'Morning'} routine · 3 steps</strong><br>1. Daily Briefing: ${esc(plan).replaceAll('\n','<br>')}<br>2. Home Control: prepare a read-only device status check<br>3. Safety Gate: ask before any physical-world change<div class="activity"><span>context-retrieval</span><span>daily-briefing</span><span>home-control</span><span>safety-gate</span></div>` } };
       }
       if (lower.includes('turn on') || lower.includes('turn off') || lower.includes('set ') || lower.includes('device') || lower.includes('light')) {
         const action = lower.includes('turn on') ? 'turn on' : lower.includes('turn off') ? 'turn off' : 'change the requested device setting';
         const device = lower.includes('living room') ? 'living room lights' : lower.includes('desk lamp') ? 'desk lamp' : 'requested device';
-        return { text:`I prepared a safe plan to ${action} the ${device}. I will not change it without your confirmation.`, card:{warn:true, html:`<strong>Confirmation required</strong><br>This demo stops before any physical-world action. Say “confirm” to simulate approval.`} };
+        return { text:`I prepared a safe plan to ${action} the ${device}. I will not change it without your confirmation.`, card:{warn:true, html:`<strong>Confirmation required</strong><br>This demo stops before any physical-world action.<div class="card-actions"><button class="confirm" data-action="confirm">Confirm safely</button><button data-action="cancel">Cancel</button></div><div class="activity"><span>home-control</span><span>awaiting-confirmation</span></div>`} };
       }
       if (lower.includes('confirm')) return { text:'Confirmation received for the demo plan. In a real Alexa+ integration, the connected device action would run here. This simulation performs no real-world change.', card:{html:'<strong>Safety gate passed</strong><br>Action recorded as simulated only.'} };
       if (lower.includes('what do you remember') || lower.includes('context')) return { text: context.notes.length ? `I remember: ${context.notes.join('; ')}.` : 'I do not have any saved preferences yet.', card:{html:`<strong>Context memory</strong><br>${Object.keys(context.preferences).length ? 'Personalization is active for this browser session.' : 'No preferences saved.'}`} };
       return { text:'I can help orchestrate your day. Try a morning routine, ask me to remember a preference, or request a home-control plan.' };
     }
-    document.querySelector('#composer').addEventListener('submit', e => { e.preventDefault(); const value = input.value.trim(); if (!value) return; addMessage(value,'user'); input.value=''; setTimeout(() => { const r = routineReply(value); addMessage(r.text,'assistant',r.card); }, 240); });
+    function send(value) { if (!value) return; addMessage(value,'user'); setTimeout(() => { const r = routineReply(value); addMessage(r.text,'assistant',r.card); }, 240); }
+    document.querySelector('#composer').addEventListener('submit', e => { e.preventDefault(); const value = input.value.trim(); if (!value) return; input.value=''; send(value); });
     document.querySelectorAll('.suggestion').forEach(b => b.addEventListener('click', () => { input.value=b.dataset.prompt; input.focus(); }));
-    addMessage('Hi, I’m Alexa+ Assistant. I can remember a preference, create a daily briefing, or orchestrate a safe home routine. What would you like to do?');
+    document.querySelector('#judge-demo').addEventListener('click', () => {
+      const steps = [
+        'Remember that I prefer a calm morning greeting',
+        'Start my morning routine with review demo and reply to judges, and check the desk lamp',
+        'Turn on the living room lights'
+      ];
+      let delay = 0; steps.forEach(step => { setTimeout(() => { send(step); }, delay); delay += 900; });
+    });
+    renderContext();
+    addMessage('Hi, I’m Alexa+ Assistant. I can remember a preference, create a daily briefing, or orchestrate a safe home routine. Press “Judge demo” to see the full agent workflow.');
   </script>
 </body>
 </html>
