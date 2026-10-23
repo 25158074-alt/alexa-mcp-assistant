@@ -9,10 +9,12 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const publicDir = path.join(root, 'public');
 const port = Number(process.env.PORT ?? 3000);
 const previewHost = '3000-ilmi8dxn20af8ke041s5i-67e23569.sg2.manus.computer';
+const publishedProxyHost = 'trsone7xfh-ua52wa2svq-ue.a.run.app';
 const allowedHosts = [
   'localhost', '127.0.0.1', '[::1]',
   'localhost:3000', '127.0.0.1:3000', '[::1]:3000',
   previewHost,
+  publishedProxyHost,
   ...(process.env.MCP_ALLOWED_HOSTS ?? '').split(',').map(host => host.trim()).filter(Boolean),
 ];
 const agentAllowedOrigins = new Set([
