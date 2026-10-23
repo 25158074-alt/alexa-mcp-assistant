@@ -1,5 +1,7 @@
 node_modules/
+.pnpm-store/
 .env
-npm-debug.log*
+.env.*
+!.env.example
 .DS_Store
 coverage/

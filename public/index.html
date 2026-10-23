@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>html, body { background: #000000 !important; color: #ffffff; }</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="An Alexa+-style assistant for MCP Streamable HTTP tools, resources and Agent Skills." />
+    <title>Alexa+ — MCP Assistant</title>
+    <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./runtime-config.js"></script>
+    <script src="./app.js" type="module"></script>
+  </head>
+  <body style="background:#000;color:#fff">
+    <div class="app-shell">
+      <aside class="server-rail" aria-label="MCP servers">
+        <a class="brand" href="./" aria-label="Alexa Plus home">
+          <span class="voice-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="brand-name">alexa<span>+</span></span>
+        </a>
+        <div class="rail-label">YOUR WORKSPACE</div>
+        <div class="rail-heading"><span>Connected spaces</span><span id="server-count" class="count-pill">0</span></div>
+        <div id="server-list" class="server-list"></div>
+        <button class="add-server-button" id="open-connect" type="button"><span aria-hidden="true">＋</span> Connect an MCP server</button>
+        <div class="demo-card">
+          <div class="demo-card-top"><span class="demo-orb" aria-hidden="true"></span><span class="eyebrow">LOCAL MCP DEMO</span></div>
+          <p>Connect to the app’s Node MCP server. Calendar and home data are simulated; GitHub Pages cannot run this backend.</p>
+          <button id="reconnect-demo" class="text-button" type="button">Reconnect demo <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="rail-footer"><span class="tiny-spark" aria-hidden="true">✳</span><span>Open standards, human control.</span></div>
+      </aside>
+
+      <main class="main-stage">
+        <header class="topbar">
+          <div class="topbar-context">
+            <p id="view-kicker" class="eyebrow">YOUR PERSONAL ASSISTANT</p>
+            <div class="topbar-status-row"><span id="active-indicator" class="status-dot"></span><span id="active-server-name">Connecting to demo…</span><span class="protocol-pill">MCP · Streamable HTTP</span></div>
+          </div>
+          <div class="topbar-actions">
+            <span id="planner-status" class="planner-status" role="status">AI planner · checking</span>
+            <label class="auto-approve-control" title="Auto-run only tools the server explicitly marks read-only; state-changing calls always need approval">
+              <input id="auto-approve" type="checkbox" />
+              <span class="switch-track" aria-hidden="true"></span>
+              <span>Auto-run safe reads</span>
+            </label>
+            <button id="voice-output" class="voice-output-control" type="button" aria-pressed="false" title="Toggle spoken assistant replies"><span aria-hidden="true">♫</span><span>Voice off</span></button>
+            <button id="toggle-inspector" class="icon-button inspector-toggle" type="button" aria-label="Toggle developer inspector" title="Toggle developer inspector"><span aria-hidden="true">☷</span></button>
+          </div>
+        </header>
+
+        <nav class="view-tabs" aria-label="Assistant views">
+          <button class="view-tab is-active" data-view="conversation" type="button">Conversation</button>
+          <button class="view-tab" data-view="capabilities" type="button">Capabilities <span id="capability-count" class="tab-count">0</span></button>
+          <button class="view-tab" data-view="skills" type="button">Agent Skills <span id="skills-count" class="tab-count">0</span></button>
+        </nav>
+
+        <section id="conversation-view" class="view-panel is-active" aria-label="Conversation">
+          <div id="welcome" class="welcome-stage">
+            <div class="welcome-burst" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <p class="eyebrow welcome-eyebrow">YOUR TOOLS, ON YOUR TERMS</p>
+            <h1>Tell me what needs<br /><em>getting done.</em></h1>
+            <p class="welcome-copy">A real agent considers this server’s tools, proposes one next step, and waits for your approval before every call.</p>
+            <div class="suggestion-label">A few things to try</div>
+            <div class="suggestions">
+              <button class="suggestion" data-prompt="What time is it in London?" type="button"><span class="suggestion-icon">◷</span><span>What time is it in London?</span><span class="arrow">↗</span></button>
+              <button class="suggestion" data-prompt="Remember to bring the library books tomorrow" type="button"><span class="suggestion-icon">✳</span><span>Remember something for me</span><span class="arrow">↗</span></button>
+              <button class="suggestion" data-prompt="Plan my day" type="button"><span class="suggestion-icon">☼</span><span>Give me a gentle day plan</span><span class="arrow">↗</span></button>
+              <button class="suggestion judge-suggestion" data-prompt="I’m late for a meeting. Check what matters, prepare my house, and don’t change anything without asking me." type="button"><span class="suggestion-icon">◇</span><span>Judge demo · check my meeting and prep the house, but ask before any changes</span><span class="arrow">↗</span></button>
+            </div>
+          </div>
+          <div id="conversation-log" class="conversation-log" aria-live="polite" aria-relevant="additions text"></div>
+          <div id="pending-area" class="pending-area"></div>
+          <div class="composer-wrap">
+            <form id="chat-form" class="composer">
+              <label class="sr-only" for="chat-input">Message your assistant</label>
+              <textarea id="chat-input" rows="1" placeholder="Ask for something, or choose a suggestion above…" autocomplete="off"></textarea>
+              <div class="composer-bottom"><span class="composer-hint"><span class="compose-spark">✳</span> Tools are reviewed before they run</span><button id="voice-input" class="icon-button voice-input" type="button" aria-pressed="false" aria-label="Start voice input" title="Speak a message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3m-4 0h8"/></svg></button><button id="send-button" class="send-button" type="submit" aria-label="Send message"><span aria-hidden="true">↑</span></button></div>
+            </form>
+            <p id="voice-status" class="voice-status" role="status" aria-live="polite">Browser voice is optional, not a live Alexa voice session. Dictate, review the text, then send.</p>
+            <p class="composer-footnote">The AI planner receives recent conversation and actual tool results. MCP bearer tokens stay in this browser and are never sent to the model. Conversation is session-only.</p>
+          </div>
+        </section>
+
+        <section id="capabilities-view" class="view-panel capabilities-view" aria-label="Connected server capabilities" hidden>
+          <div class="section-heading">
+            <div><p class="eyebrow">DISCOVER WHAT'S POSSIBLE</p><h1>Your connected <em>capabilities</em></h1><p>Tools, resources and prompts offered by the active MCP server.</p></div>
+            <button id="refresh-capabilities" class="secondary-button" type="button"><span aria-hidden="true">↻</span> Refresh</button>
+          </div>
+          <div class="capability-switcher" role="tablist" aria-label="Capability types">
+            <button class="capability-tab is-active" data-capability="tools" role="tab" aria-selected="true" type="button">Tools <span id="tools-total">0</span></button>
+            <button class="capability-tab" data-capability="resources" role="tab" aria-selected="false" type="button">Resources <span id="resources-total">0</span></button>
+            <button class="capability-tab" data-capability="prompts" role="tab" aria-selected="false" type="button">Prompts <span id="prompts-total">0</span></button>
+          </div>
+          <div id="capability-list" class="capability-list"></div>
+        </section>
+
+        <section id="skills-view" class="view-panel skills-view" aria-label="Agent Skills library" hidden>
+          <div class="section-heading skills-heading">
+            <div><p class="eyebrow">INSTRUCTIONS, LOADED ON DEMAND</p><h1>Agent <em>Skills</em></h1><p>Browse MCP Extensions skills or add a compatible <code>SKILL.md</code>. Instructions are displayed as content; scripts are never run.</p></div>
+            <label class="upload-skill-button">＋ Add SKILL.md<input id="skill-file" type="file" accept=".md,text/markdown,text/plain" /></label>
+          </div>
+          <div class="skill-import-row"><label for="skill-source-input" class="sr-only">Paste Agent Skill Markdown</label><textarea id="skill-source-input" rows="3" placeholder="Or paste a SKILL.md here — YAML frontmatter with name and description, then Markdown instructions…"></textarea><button id="import-skill" class="secondary-button" type="button">Import pasted skill</button></div>
+          <div id="skill-library" class="skill-library"></div>
+          <div class="skill-attribution">Official materials: <a href="https://apps.extensions.modelcontextprotocol.io/api/documents/agent-skills.html" target="_blank" rel="noreferrer">MCP Extensions Agent Skills guide</a> · Format: <a href="https://agentskills.io/specification" target="_blank" rel="noreferrer">Agent Skills specification</a></div>
+        </section>
+      </main>
+
+      <aside id="inspector-panel" class="inspector-panel" aria-label="Developer inspector">
+        <div class="inspector-head"><div><p class="eyebrow">UNDER THE HOOD</p><h2>Live inspector</h2></div><button id="close-inspector" class="icon-button close-inspector" type="button" aria-label="Hide inspector">×</button></div>
+        <div class="inspector-summary"><span id="transport-led" class="transport-led"></span><span id="transport-label">Waiting for MCP session</span></div>
+        <div class="inspector-subhead"><span>JSON-RPC EVENTS</span><button id="clear-events" class="text-button muted-button" type="button">Clear</button></div>
+        <div id="event-list" class="event-list"></div>
+        <div class="inspector-note"><span class="note-mark">i</span><span>Authorization values are intentionally excluded from the event log.</span></div>
+      </aside>
+    </div>
+
+    <dialog id="connect-dialog" class="app-dialog">
+      <form id="connect-form" method="dialog">
+        <div class="dialog-topline"><span class="dialog-icon">↗</span><button class="icon-button dialog-close" type="button" aria-label="Close">×</button></div>
+        <p class="eyebrow">BRING A SERVER INTO THE ROOM</p>
+        <h2>Connect an MCP server</h2>
+        <p class="dialog-copy">Use a Streamable HTTP endpoint. The connection runs directly from this browser; your server needs to allow this app's origin and MCP headers through CORS.</p>
+        <label for="server-name">Name</label><input id="server-name" name="name" type="text" maxlength="60" placeholder="My tools" required />
+        <label for="server-url">MCP endpoint URL</label><input id="server-url" name="url" type="url" placeholder="https://example.com/mcp" required />
+        <label for="server-token">Bearer token <span>optional · held only in memory</span></label><input id="server-token" name="token" type="password" autocomplete="off" placeholder="Paste a server token" />
+        <div id="connect-error" class="connect-error" role="alert" hidden></div>
+        <div class="dialog-actions"><button class="secondary-button dialog-cancel" type="button">Cancel</button><button id="connect-submit" class="primary-button" type="submit">Connect</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="skill-dialog" class="app-dialog skill-dialog">
+      <div class="dialog-topline"><span class="dialog-icon">✳</span><button class="icon-button skill-dialog-close" type="button" aria-label="Close">×</button></div>
+      <p class="eyebrow">AGENT SKILL</p><h2 id="skill-dialog-title"></h2><p id="skill-dialog-description" class="dialog-copy"></p>
+      <div class="skill-source-line" id="skill-dialog-source"></div><pre id="skill-instructions" class="skill-instructions"></pre>
+      <div class="skill-readonly-note">Reference content only — no instructions or scripts are executed in this app.</div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

@@ -1,73 +1,67 @@
-# Alexa+ Hackathon Submission
+# Alexa+ Hackathon Submission Draft
 
-## Project description
+## Project
 
-Alexa+ MCP Assistant is a functional browser chatbot simulation backed by a self-hosted Alexa+-style assistant server. The GitHub Pages experience lets a judge chat naturally with the assistant, save context, request a daily briefing, plan a home action, and orchestrate a routine. The same Agent Skills are exposed over the Model Context Protocol (MCP) Streamable HTTP transport for compatible MCP clients.
+**Name:** Alexa+ MCP Assistant
 
-The project includes two Agent Skills: `home-control`, which prepares a device-action plan and requires confirmation before any real-world change, and `daily-briefing`, which turns caller-provided items into a concise spoken briefing. The browser chatbot adds context memory and a routine orchestrator that combines both skills. The `get_time` tool provides a small utility example. This repository is intentionally a safe demo: it does not claim to control real devices or access personal accounts.
+**Project description:**
 
-## Features and functionality
+Alexa+ MCP Assistant is a browser-based, Alexa+-inspired workbench for connecting to Model Context Protocol servers and inspecting how an agent uses their tools. In its Node.js runtime, a real server-side LLM planner reads the current conversation and the active MCP server's live tool descriptions and schemas, selects one next action, and reasons over actual tool results in a bounded multi-step loop. The browser uses Streamable HTTP and shows tool arguments for review; state-changing calls remain behind an explicit approval step. The included official-SDK MCP server provides sample time, notes, calendar, and household tools, plus simulator resources and prompts. The calendar and smart-home examples are clearly labelled in-memory demo data, not personal-account integrations. The interface also includes an Agent Skills library, protocol inspector, optional browser dictation, and optional speech synthesis.
 
-- MCP Streamable HTTP endpoint at `/mcp`.
-- MCP protocol initialization tested with version `2025-11-25`.
-- Agent Skill instruction files under `skills/`.
-- MCP tools for skill discovery, instruction retrieval, guarded demo execution, and time lookup.
-- Health endpoint at `/health`.
-- Optional Bearer-token or API-key authentication.
-- DNS-rebinding and host validation protections.
-- Local smoke test and official MCP client integration test procedure.
-
-## Code repository
-
-Private GitHub repository: https://github.com/25158074-alt/alexa-mcp-assistant
-
-The repository contains the complete source code, lockfile, skill assets, environment template, README, and tests needed to run the project.
+**Important deployment disclosure:** the GitHub Pages version is a static frontend. GitHub Pages does not host the Node.js MCP server or LLM API; a connected live Pages demo requires a separately hosted HTTPS backend. Do not submit the Pages URL as a public MCP endpoint.
 
 ## Primary track
 
-- Alexa+
+- [x] Alexa+
+- [ ] Bee (Wearable AI)
+- [ ] Ring
+- [ ] Fire TV
 
-## Mini challenges
+The project does not claim a live Amazon Alexa device integration; its Alexa+-style interaction is the simulated experience described by the track brief.
 
-- None currently selected.
+## Mini-challenge selection
 
-## Product feedback
+Confirm your actual Devpost selection before submitting. No AWS Builder or Open Source mini-challenge is claimed by this draft. If selecting AWS Builder, document the AWS service and its runtime use. If selecting Open Source, add the contribution URL, repository URL, GitHub username, and a description of the contribution.
 
-### Developer tools, APIs, and SDKs used
+## Repository
 
-- `@modelcontextprotocol/server`: creates the MCP server and registers tools.
-- `@modelcontextprotocol/node`: provides `NodeStreamableHTTPServerTransport`, which is the runtime transport used at `/mcp`.
-- `@modelcontextprotocol/client`: used in the integration verification script to connect to the running server, list tools, and call an Agent Skill.
-- `@modelcontextprotocol/express`: installed as part of the MCP Express integration surface and available for future authenticated Express helpers.
-- `@modelcontextprotocol/ext-apps`: installed for compatibility with MCP Apps-capable clients and future Alexa+ UI surfaces.
-- Express, Zod, CORS, and dotenv: HTTP routing, runtime validation, cross-origin configuration, and environment configuration.
+`https://github.com/25158074-alt/alexa-mcp-assistant`
 
-### What worked well
+Current repository visibility was verified as **public**. The brief accepts a public repository if a visible open-source license is included, or a private repository shared with `testing@devpost.com` and the listed Amazon reviewers. This repository must not be described as private. Confirm the repository has a valid, top-level license visible to GitHub before relying on the public-repository option; the bundled upstream MCP Skills license applies to those upstream files, not automatically to the entire project.
 
-The SDK packages installed cleanly from npm. The server and client packages expose a straightforward `McpServer` plus `NodeStreamableHTTPServerTransport` flow. Tool schemas are concise with Zod, and the official client connected successfully over Streamable HTTP, discovered all four tools, and executed `daily-briefing`.
+## Product feedback draft
 
-### What needs work
+### Which developer tools, APIs, and SDKs did you use and for what?
 
-The SDK's host validation is security-conscious but the development configuration needs explicit host-and-port allowlist entries when requests include a port in the `Host` header. The examples and type declarations were useful for resolving this, but a small end-to-end Streamable HTTP starter template with authentication, CORS, and DNS-rebinding defaults would reduce onboarding friction.
+We used the official Model Context Protocol JavaScript SDK packages (`@modelcontextprotocol/client`, `@modelcontextprotocol/server`, `@modelcontextprotocol/node`, and `@modelcontextprotocol/express`) to implement a Streamable HTTP server and a client smoke test; Zod to define tool input validation; the project-managed OpenAI-compatible model endpoint for server-side next-step planning; MCP Extensions Agent Skills documentation and files for the Skill viewer; browser Web Speech APIs for optional dictation/speech synthesis; and GitHub Pages/Actions for the static frontend deployment.
 
-The SDK ecosystem also contains several packages with closely related responsibilities. A short compatibility matrix explaining when to use `server`, `node`, `express`, `client`, and `ext-apps` would make package selection easier.
+### What worked well?
 
-### Onboarding experience
+The official SDK provides clear capability registration, protocol negotiation, session transport, and client calls. A real SDK client test verifies MCP `2025-11-25`, tool discovery, simulator calls, and a resource read. Server-side planning keeps the model credential out of browser code, while the UI makes proposed tool arguments visible before state changes.
 
-Onboarding was good: install the packages, create an `McpServer`, register a tool, create the Node Streamable HTTP transport, connect the server to the transport, and call `handleRequest`. The main workaround was reading the installed declaration examples to confirm the current transport lifecycle and configuring allowed hosts with the local port.
+### What needs work?
 
-### Would we build with these tools again?
+GitHub Pages is static hosting and cannot run the MCP server or model proxy. A working publicly reachable agent therefore needs an additional HTTPS Node host, CORS/origin configuration, and secure server-side model credentials. Browser microphone APIs also vary across browsers. Before final submission, verify the hosted backend, published site, Pages-to-backend CORS, and model error paths in the exact judging environment.
 
-Yes. The APIs are composable, the transport worked reliably in local tests, and the official client made it possible to validate the complete runtime path rather than only checking imports. We would build with them again, especially if the documentation added a production-ready Streamable HTTP reference server and clearer package-selection guidance.
+### How was onboarding (zero to hello world)?
 
-## Demonstration video plan
+The package manager and official SDK expose the main server/client APIs, and an SDK smoke test gives a reproducible starting point. The first integration pass needed extra attention to host/origin checks for local and Pages clients and to the distinction between a static Pages artifact and a running backend. The local `pnpm dev` and `pnpm test:mcp` commands document the tested path.
 
-The final public video should be less than three minutes and show:
+### Would you build with these devices/services again?
 
-1. Starting the server and opening the health endpoint.
-2. Connecting an MCP client to `/mcp`.
-3. Discovering the Agent Skills.
-4. Running `daily-briefing` and showing the returned spoken-style briefing.
-5. Running `home-control` and showing that a changing action produces a confirmation-required plan instead of claiming a device was changed.
+**Yes—with a backend deployment plan.** The MCP SDK and managed model make a genuinely agentic tool-connected prototype practical, and approval UX is testable. For a public experience, pair static Pages with a separate secured HTTPS service; Pages alone is insufficient.
 
-The video should use original screen footage and narration or royalty-free audio only, then be uploaded publicly to YouTube or Vimeo for the submission form.
+## Demo video checklist
+
+Not yet recorded or published. Submission requires a publicly accessible YouTube or Vimeo video **under 3 minutes**, showing the project functioning on the device it was built for, with the video URL entered into the submission form. Do not include third-party trademarks or copyrighted music/media without permission.
+
+Suggested sequence: (1) show the connected MCP server and negotiated protocol version, (2) ask a natural, non-scripted question about the sample calendar, (3) show the proposed tool and arguments and require approval, (4) inspect the actual MCP result and the agent's follow-up, (5) request a simulated home change and reject it or approve it, then show the updated simulator state, (6) disclose that calendar/home values are simulated and Pages itself is static. Use the working Node/Preview environment for live backend footage; don't imply a Pages-only static build has a backend.
+
+## Before submission
+
+- Verify the GitHub Pages deployment and repository license/visibility route.
+- Decide public-with-license versus private-and-invited collaborators; do not assume the public repository meets the private invitation option.
+- Confirm mini-challenges in Devpost rather than claiming them from tooling alone.
+- If public live LLM/MCP service is expected, authorize and deploy an HTTPS Node backend, configure exact Pages CORS origins, and test it from the published domain.
+- Record, publish, and link the sub-three-minute demo video.
+- Replace this draft with final verified links and feedback before submitting.
