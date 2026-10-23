@@ -20,7 +20,7 @@ No provider key belongs in `public/`, GitHub Actions artifacts, browser storage,
 
 ```bash
 npm ci
-npm run start:agentic
+npm start
 ```
 
 Open `http://localhost:3000`. On a Manus project runtime, the managed model environment is injected for the Node process. Elsewhere, provide the two server variables in the shell/hosting secret store; do not paste them into client configuration. The `public/runtime-config.js` default is intentionally blank for static Pages. For a same-origin local Node server, leave it blank; the UI resolves `/mcp/demo` and `/api/agent/*` against the Node app.
@@ -31,7 +31,7 @@ To check the SDK-backed MCP session, tool calls, simulator, and resource:
 MCP_SMOKE_URL=http://127.0.0.1:3000/mcp/demo npm run test:mcp
 ```
 
-The earlier `server.mjs` implementation and its original `npm start` / `npm test` commands remain in the repository. `npm run start:agentic` starts the added multi-turn LLM workbench backend and SDK demo MCP server on port 3000; `npm run test:mcp` tests that demo endpoint.
+`npm start` starts the multi-turn LLM workbench backend and SDK demo MCP server on port 3000; `npm run test:mcp` tests that demo endpoint. Use `npm run dev` for Node watch mode.
 
 To use a real third-party remote Streamable HTTP MCP endpoint from the browser, choose **Connect an MCP server**, use an HTTPS endpoint, and enter an optional bearer token in the connection dialog. Tokens remain in browser memory and are not sent to the LLM planner. A remote server must permit browser CORS from the app origin. Read-only calls are the only calls that the optional safe-read setting can run automatically; state-changing tools always require the review/approval card.
 
@@ -58,13 +58,13 @@ The microphone button uses browser-provided Web Speech recognition, and the opti
 ## Repository tests
 
 ```bash
-npm test
+npm run test:mcp
 node --check server/index.js
 node --check server/demo-mcp.js
 node --check server/agent.js
 node --check server/home-simulator.js
 node --check public/app.js
-npm run test:mcp
+npm ci
 ```
 
 The MCP smoke test checks negotiation at `2025-11-25`, tool discovery, sample calendar/home calls, and a simulator resource over the running Streamable HTTP server.

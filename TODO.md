@@ -24,7 +24,7 @@
   - Add user-initiated speech input with the browser Web Speech API and optional spoken assistant output with speech synthesis.
   - Provide accessible listening/error status and a graceful text-only fallback when the browser lacks speech support or denies microphone permission.
 
-- [ ] **Alexa+-style conversation and safe tool orchestration**
+- [x] **Alexa+-style conversation and safe tool orchestration**
   - Provide an Alexa+-style conversational web interface with text input, assistant responses, tool activity states, and visible loading/output states.
   - Let the assistant select an appropriate connected tool, request missing parameters, invoke it, and incorporate the result into the conversation.
   - Before execution, show the intended tool invocation and arguments with approve and reject controls and an optional auto-approve choice.

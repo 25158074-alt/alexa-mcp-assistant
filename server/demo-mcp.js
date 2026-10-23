@@ -186,7 +186,6 @@ export async function handleDemoMcp(req, res) {
         '3000-ilmi8dxn20af8ke041s5i-67e23569.sg2.manus.computer',
         ...(process.env.MCP_ALLOWED_HOSTS ?? '').split(',').map(host => host.trim()).filter(Boolean),
       ],
-      allowedOrigins: allowedOriginHosts,
       enableDnsRebindingProtection: true,
     });
     const server = createDemoServer();
