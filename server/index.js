@@ -33,7 +33,6 @@ const allowedOriginHostnames = [...new Set([
 ])];
 const app = createMcpExpressApp({
   host: '0.0.0.0',
-  ...(process.env.NODE_ENV === 'production' ? {} : { allowedHosts: allowedHostnames }),
   allowedOrigins: allowedOriginHostnames,
   jsonLimit: '1mb',
 });
